@@ -14,6 +14,10 @@ const ArchivePage = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAuth]);
 
+  if(userAuth === null){
+    return null;
+  }
+
   return (
     <div className='container--wrap'>
       <p>Archive Page</p>
