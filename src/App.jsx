@@ -1,35 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
-function App() {
-  const [count, setCount] = useState(0)
+import AppNavbar from './layouts/AppNavbar';
+import AppFooter from './layouts/AppNavbar';
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+import LandingPage from './pages/LandingPage';
+import NotePage from './pages/note/NotePage';
+import ArchivePage from './pages/note/ArchivePage';
+import DetailPage from './pages/note/DetailPage';
+import LoginPage from './pages/auth/LoginPage';
+import RegisterPage from './pages/auth/RegisterPage';
+import NotFoundPage from './pages/NotFoundPage';
+
+class App extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
+  render() {
+    return(
+      <div className='app'>
+        <header className='app__header'>
+          <AppNavbar />
+        </header>
+
+        <main className='app__content'>
+          <Routes>
+            <Route path="/" element={
+              <LandingPage />
+            }/>
+            
+            <Route path="/note" element={
+              <NotePage />
+            }/>
+
+            <Route path="/archive" element={
+              <ArchivePage />
+            }/>
+
+            <Route path="/note/:id" element={
+              <DetailPage />
+            }/>
+
+            <Route path="/login" element={
+              <LoginPage />
+            }/>
+            
+            <Route path="/register" element={
+              <RegisterPage />
+            }/>
+            
+            <Route path="/not-found" element={<NotFoundPage />} />
+            <Route path="*" element={<Navigate to="/not-found" />} />
+          </Routes>
+        </main>
+
+        <footer className='app__footer'>
+          <AppFooter />
+        </footer>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    );
+  }
 }
 
-export default App
+
+export default App;
