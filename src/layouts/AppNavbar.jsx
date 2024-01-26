@@ -28,8 +28,8 @@ function AppNavbar({ logoutHandler }) {
       ))}
       {userAuth && (
         <>
-          {userAuth.name}
           <button onClick={logoutHandler}>Log Out</button>
+          {userAuth.name}
         </>
       )}
     </>
