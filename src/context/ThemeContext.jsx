@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getTheme, putTheme } from '../utils/local-storage';
 
 const ThemeContext = React.createContext({
-  theme: 'light',
+  theme: null,
   toggleThemeHandler: () => {},
 });
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getLocale, putLocale } from '../utils/local-storage';
 
 const LocaleContext = React.createContext({
-  language: 'en',
+  language: null,
   toggleLanguageHandler: () => {},
 });
 
@@ -27,8 +27,13 @@ class LocaleContextProvider extends React.Component {
 
   componentDidUpdate(_, prevState) {
     if (prevState.language !== this.state.language) {
-      putLocale(this.state.language);
+      this.updateLocale();
     }
+  }
+
+  updateLocale() {
+    putLocale(this.state.language);
+    document.documentElement.setAttribute('lang', this.state.language);
   }
 
   render() {

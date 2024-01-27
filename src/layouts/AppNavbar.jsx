@@ -2,19 +2,23 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import { useAuth } from '../hooks/useContext';
+import { useAuth, useLocale, useTheme } from '../hooks/useContext';
+
 import { getUserLogged } from '../utils/network-data';
+import { NavbarText } from '../utils/lang-content';
 
 function AppNavbar() {
   const { isUserLoggedIn, onLogoutHandler } = useAuth();
+  const { theme, toggleThemeHandler } = useTheme();
+  const { language, toggleLanguageHandler } = useLocale();
 
   const location = useLocation();
   const links = [
-    {path: '/', text: 'Home'},
-    {path: '/note', text: 'Note'},
-    {path: '/archive', text: 'Archive'},
-    {path: '/login', text: 'Login'},
-    {path: '/register', text: 'Register'},
+    {path: '/'},
+    {path: '/note'},
+    {path: '/archive'},
+    {path: '/login'},
+    {path: '/register'},
   ];
 
   const [userProfile, setUserProfile] = React.useState(null);
@@ -32,10 +36,14 @@ function AppNavbar() {
   
   return (
     <>
-      <p>Navbar</p>
+      <p>
+        Navbar
+        <span onClick={toggleLanguageHandler}>{language}</span>
+        <span onClick={toggleThemeHandler}>{theme}</span>
+      </p>
       {links.map((link, index) => (
         <Link key={index} to={link.path} className={location.pathname === link.to ? 'active' : ''}>
-          {link.text}
+          {NavbarText[language].list[index]}
         </Link>
       ))}
       {isUserLoggedIn && userProfile && (
