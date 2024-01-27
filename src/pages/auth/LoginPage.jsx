@@ -1,35 +1,42 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
 import { login } from '../../utils/network-data';
+import { useAuth } from '../../hooks/useContext';
 import LoginForm from '../../components/auth/LoginForm';
-import { AuthContext } from '../../context/AuthContext';
 
-const LoginPage = ({ getUser }) => {
+const LoginPage = () => {
+  const { isUserLoggedIn, onUserLogIn } = useAuth();
   const navigate = useNavigate();
-  const userAuth = React.useContext(AuthContext);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
-    if(userAuth !== null){
+    if(isUserLoggedIn){
       return navigate(-1);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAuth]);
+  }, [isUserLoggedIn]);
 
   const onLogin = async ({ email, password }) => {
-    const { error, data } = await login({ email, password });
- 
-    if (!error) {
-      getUser(data);
+    try {
+      setIsLoading(true);
+
+      const { data } = await login({ email, password });
+      onUserLogIn(data);
       navigate('/note');
+    } catch (error) {
+      console.error('Error during login:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  if(userAuth !== null){
+  if(isUserLoggedIn){
     return null;
   }
+
+  console.log(isLoading);
 
   return (
     <div className='container--wrap'>
@@ -39,8 +46,5 @@ const LoginPage = ({ getUser }) => {
   );
 };
 
-LoginPage.propTypes = {
-  getUser: PropTypes.func.isRequired
-};
 
 export default LoginPage;

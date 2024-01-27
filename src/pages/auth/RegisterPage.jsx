@@ -2,29 +2,33 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useAuth } from '../../hooks/useContext';
 import { register } from '../../utils/network-data';
 import RegisterForm from '../../components/auth/RegisterForm';
-import { AuthContext } from '../../context/AuthContext';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const userAuth = React.useContext(AuthContext);
+  const { isUserLoggedIn } = useAuth();
 
   React.useEffect(() => {
-    if(userAuth !== null){
+    if(isUserLoggedIn){
       return navigate(-1);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAuth]);
+  }, [isUserLoggedIn]);
 
   const onRegister = async (user) => {
-    const { error } = await register(user);
-    if (!error) {
-      navigate('/login');
+    try {
+      const { error } = await register(user);
+      if (!error) {
+        navigate('/login');
+      }
+    } catch(error) {
+      console.error('Error during register:', error);
     }
   };
 
-  if(userAuth !== null){
+  if(isUserLoggedIn){
     return null;
   }
 
