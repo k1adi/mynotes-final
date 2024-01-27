@@ -1,22 +1,34 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
 
-import { AuthContext } from '../context/AuthContext';
+import { useAuth } from '../hooks/useContext';
+import { getUserLogged } from '../utils/network-data';
 
-function AppNavbar({ logoutHandler }) {
-  const userAuth = React.useContext(AuthContext);
+function AppNavbar() {
+  const { userLoggedIn, onUserLogOut } = useAuth();
 
   const location = useLocation();
   const links = [
     {path: '/', text: 'Home'},
     {path: '/note', text: 'Note'},
     {path: '/archive', text: 'Archive'},
-    {path: '/note/123', text: 'Detail'},
     {path: '/login', text: 'Login'},
     {path: '/register', text: 'Register'},
   ];
+
+  const [userProfile, setUserProfile] = React.useState(null);
+  React.useEffect(() => {
+    if (userLoggedIn) {
+      getUserLogged()
+        .then(({ data }) => {
+          setUserProfile(data);
+        })
+        .catch(({ error }) => {
+          console.error(error);
+        });
+    }
+  }, [userLoggedIn]);
   
   return (
     <>
@@ -26,18 +38,14 @@ function AppNavbar({ logoutHandler }) {
           {link.text}
         </Link>
       ))}
-      {userAuth && (
+      {userLoggedIn && userProfile && (
         <>
-          <button onClick={logoutHandler}>Log Out</button>
-          {userAuth.name}
+          <button onClick={onUserLogOut}>Log Out</button>
+          {userProfile.name}
         </>
       )}
     </>
   );
 }
-
-AppNavbar.propTypes = {
-  logoutHandler: PropTypes.func.isRequired
-};
 
 export default AppNavbar;

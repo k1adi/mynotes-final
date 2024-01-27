@@ -1,34 +1,39 @@
 import React from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { AuthContext } from '../../context/AuthContext';
-import { getArchivedNotes } from '../../utils/network-data';
+import { useAuth } from '../../hooks/useContext';
+import { deleteNote, getArchivedNotes } from '../../utils/network-data';
 
 import SearchBar from '../../components/ui/SearchBar';
 import NoteWrapper from '../../components/note/NoteWrapper';
+import LoaderScreen from '../../components/ui/LoaderScreen';
 
 const ArchivePage = () => {
   const navigate = useNavigate();
-  const userAuth = React.useContext(AuthContext);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { isUserLoggedIn } = useAuth();
   const [archived, setArchive] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [keyword, setKeyword] = React.useState(() => {
     return searchParams.get('keyword') || '';
   });
 
   React.useEffect(() => {
-    if(userAuth === null) {
+    if(isUserLoggedIn){
+      getArchivedNotes().
+        then(({ data }) => {
+          setArchive(data);
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
       navigate('/login');
-      return;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAuth]);
-
-  React.useEffect(() => {
-    getArchivedNotes().then(({ data }) => {
-      setArchive(data);
-    });
-  }, []);
+  }, [isUserLoggedIn, navigate]);
 
   function onKeywordChange(keyword) {
     setKeyword(keyword);
@@ -41,8 +46,30 @@ const ArchivePage = () => {
     );
   });
 
-  if(userAuth === null){
+  const deleteNoteHandler = async (id) => {
+    try {
+      setIsLoading(true);
+      await deleteNote(id);
+
+      const { data } = await getArchivedNotes();
+      setArchive(data);
+    } catch (error) {
+      console.error('Error deleting note:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const loadingPageHandler = () => {
+    setIsLoading((prevIsLoading) => !prevIsLoading);
+  };
+
+  if(!isUserLoggedIn){
     return null;
+  }
+
+  if(isLoading){
+    return <LoaderScreen />;
   }
 
   return (
@@ -50,7 +77,12 @@ const ArchivePage = () => {
       <p>Archive Page</p>
       <div>
         <SearchBar keywordHandler={onKeywordChange}/>
-        <NoteWrapper pageName="Archive" notes={filteredArchive} />
+        <NoteWrapper 
+          pageName="Archive" 
+          notes={filteredArchive}
+          onLoading={loadingPageHandler}
+          onDeleteNote={deleteNoteHandler}
+        />
       </div>
     </div>
   );

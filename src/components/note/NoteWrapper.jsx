@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NoteCard from './NoteCard';
 
-function NoteWrapper({ pageName, notes }) {
+function NoteWrapper({ pageName, notes, onLoading, onDeleteNote }) {
   return (
     <>
       { notes.length !== 0 ? 
@@ -11,6 +11,8 @@ function NoteWrapper({ pageName, notes }) {
           <NoteCard
             key={item.id} 
             note={item}
+            onLoading={onLoading}
+            deleteNote={onDeleteNote}
           />
         ))
         :
@@ -21,8 +23,10 @@ function NoteWrapper({ pageName, notes }) {
 }
 
 NoteWrapper.propTypes = {
+  notes: PropTypes.array.isRequired,
   pageName: PropTypes.string.isRequired,
-  notes: PropTypes.array.isRequired
+  onLoading: PropTypes.func.isRequired,
+  onDeleteNote: PropTypes.func.isRequired,
 };
 
 export default NoteWrapper;
