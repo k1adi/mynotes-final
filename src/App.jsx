@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
@@ -12,107 +13,49 @@ import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import NotFoundPage from './pages/NotFoundPage';
 
-import { AuthContextProvider } from './context/AuthContext';
-import { getUserLogged, putAccessToken } from './utils/network-data';
-import LoaderScreen from './components/ui/LoaderScreen';
+function App() {
+  return (
+    <div className='app'>
+      <header className='app__header'>
+        <AppNavbar />
+      </header>
 
-class App extends React.Component {
-  constructor(props){
-    super(props);
+      <main className='app__content'>
+        <Routes>
+          <Route path="/" element={
+            <LandingPage />
+          }/>
+          
+          <Route path="/note" element={
+            <NotePage />
+          }/>
 
-    this.state = {
-      authUser: null,
-      initializing: true,
-      isLoadingTime: true,
-    };
+          <Route path="/archive" element={
+            <ArchivePage />
+          }/>
 
-    this.onUserLoggedIn = this.onUserLoggedIn.bind(this);
-    this.onUserLoggedOut = this.onUserLoggedOut.bind(this);
-  }
+          <Route path="/note/:id" element={
+            <DetailPage />
+          }/>
 
-  async componentDidMount() {
-    const { data } = await getUserLogged();
-    this.setState(() => {
-      return {
-        authUser: data,
-        initializing: false,
-        isLoadingTime: false,
-      };
-    });
-  }
+          <Route path="/login" element={
+            <LoginPage />
+          }/>
+          
+          <Route path="/register" element={
+            <RegisterPage />
+          }/>
+          
+          <Route path="/not-found" element={<NotFoundPage />} />
+          <Route path="*" element={<Navigate to="/not-found" replace />} />
+        </Routes>
+      </main>
 
-  async onUserLoggedIn({ accessToken }) {
-    putAccessToken(accessToken);
-
-    const { data } = await getUserLogged();
-    this.setState(() => {
-      return { authUser: data };
-    });
-  }
-
-  onUserLoggedOut() {
-    this.setState(() => {
-      return { authUser: null };
-    });
-
-    putAccessToken('');
-  }
-
-  render() {
-    if (this.state.initializing) {
-      return null;
-    }
-
-    return(
-      <AuthContextProvider value={this.state.authUser}>
-        <div className='app'>
-          {this.state.isLoadingTime && (
-            <LoaderScreen />
-          )}
-
-          <header className='app__header'>
-            <AppNavbar logoutHandler={this.onUserLoggedOut} />
-          </header>
-
-          <main className='app__content'>
-            <Routes>
-              <Route path="/" element={
-                <LandingPage />
-              }/>
-              
-              <Route path="/note" element={
-                <NotePage />
-              }/>
-
-              <Route path="/archive" element={
-                <ArchivePage />
-              }/>
-
-              <Route path="/note/:id" element={
-                <DetailPage />
-              }/>
-
-              <Route path="/login" element={
-                <LoginPage getUser={this.onUserLoggedIn} />
-              }/>
-              
-              <Route path="/register" element={
-                <RegisterPage />
-              }/>
-              
-              <Route path="/not-found" element={<NotFoundPage />} />
-              <Route path="*" element={<Navigate to="/not-found" />} />
-            </Routes>
-          </main>
-
-          <footer className='app__footer'>
-            <AppFooter />
-          </footer>
-        </div>
-      </AuthContextProvider>
-    );
-  }
+      <footer className='app__footer'>
+        <AppFooter />
+      </footer>
+    </div>
+  );
 }
-
 
 export default App;
