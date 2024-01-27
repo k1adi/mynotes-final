@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../../utils/network-data';
 import { useAuth } from '../../hooks/useContext';
 import LoginForm from '../../components/auth/LoginForm';
+import LoaderScreen from '../../components/ui/LoaderScreen';
 
 const LoginPage = () => {
-  const { isUserLoggedIn, onUserLogIn } = useAuth();
+  const { isUserLoggedIn, onLoginHandler } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -23,7 +24,7 @@ const LoginPage = () => {
       setIsLoading(true);
 
       const { data } = await login({ email, password });
-      onUserLogIn(data);
+      onLoginHandler(data);
       navigate('/note');
     } catch (error) {
       console.error('Error during login:', error);
@@ -36,7 +37,9 @@ const LoginPage = () => {
     return null;
   }
 
-  console.log(isLoading);
+  if(isLoading){
+    return <LoaderScreen />;
+  }
 
   return (
     <div className='container--wrap'>

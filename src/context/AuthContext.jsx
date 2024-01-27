@@ -24,12 +24,12 @@ class AuthContextProvider extends React.Component {
   }
 
   onLoginHandler = ({ accessToken }) => {
-    this.setState({ userLoggedIn: true, accessToken });
+    this.setState({ isUserLoggedIn: true, accessToken });
     putAccessToken(accessToken);
   };
 
   onLogoutHandler = () => {
-    this.setState({ userLoggedIn: false, accessToken: '' });
+    this.setState({ isUserLoggedIn: false, accessToken: '' });
     putAccessToken('');
   };
 

@@ -6,7 +6,7 @@ import { useAuth } from '../hooks/useContext';
 import { getUserLogged } from '../utils/network-data';
 
 function AppNavbar() {
-  const { userLoggedIn, onUserLogOut } = useAuth();
+  const { isUserLoggedIn, onLogoutHandler } = useAuth();
 
   const location = useLocation();
   const links = [
@@ -19,7 +19,7 @@ function AppNavbar() {
 
   const [userProfile, setUserProfile] = React.useState(null);
   React.useEffect(() => {
-    if (userLoggedIn) {
+    if (isUserLoggedIn) {
       getUserLogged()
         .then(({ data }) => {
           setUserProfile(data);
@@ -28,7 +28,7 @@ function AppNavbar() {
           console.error(error);
         });
     }
-  }, [userLoggedIn]);
+  }, [isUserLoggedIn]);
   
   return (
     <>
@@ -38,9 +38,9 @@ function AppNavbar() {
           {link.text}
         </Link>
       ))}
-      {userLoggedIn && userProfile && (
+      {isUserLoggedIn && userProfile && (
         <>
-          <button onClick={onUserLogOut}>Log Out</button>
+          <button onClick={onLogoutHandler}>Log Out</button>
           {userProfile.name}
         </>
       )}
