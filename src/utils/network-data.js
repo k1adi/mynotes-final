@@ -1,4 +1,5 @@
 import CONFIG from './config';
+import { toast } from 'react-toastify';
 
 function getAccessToken() {
   return localStorage.getItem(CONFIG.STORAGE_TOKEN);
@@ -30,10 +31,12 @@ async function login({ email, password }) {
   const responseJson = await response.json();
 
   if (responseJson.status !== 'success') {
-    alert(responseJson.message);
+    // alert(responseJson.message);
+    toast.warn(responseJson.message, CONFIG.TOAST_EMITTER);
     return { error: true, data: null };
   }
 
+  toast.success('Login berhasil', CONFIG.TOAST_EMITTER);
   return { error: false, data: responseJson.data };
 }
 
@@ -49,10 +52,11 @@ async function register({ name, email, password }) {
   const responseJson = await response.json();
 
   if (responseJson.status !== 'success') {
-    alert(responseJson.message);
+    // alert(responseJson.message);
+    toast.warn(responseJson.message, CONFIG.TOAST_EMITTER);
     return { error: true };
   }
-
+  
   return { error: false };
 }
 

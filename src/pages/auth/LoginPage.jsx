@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { login } from '../../utils/network-data';
 import { useAuth } from '../../hooks/useContext';
@@ -8,43 +8,43 @@ import LoginForm from '../../components/auth/LoginForm';
 import LoaderScreen from '../../components/ui/LoaderScreen';
 
 const LoginPage = () => {
-  const { isUserLoggedIn, onLoginHandler } = useAuth();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = React.useState(false);
+  const { isUserLoggedIn, onLoginHandler } = useAuth();
+  const [ isLoading, setIsLoading ] = React.useState(false);
 
   React.useEffect(() => {
     if(isUserLoggedIn){
-      return navigate(-1);
+      navigate(-1);
+      return;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isUserLoggedIn]);
+  }, [isUserLoggedIn, navigate]);
 
   const onLogin = async ({ email, password }) => {
-    try {
-      setIsLoading(true);
+    setIsLoading(true);
 
-      const { data } = await login({ email, password });
+    const { error, data } = await login({ email, password });
+    if (!error) {
       onLoginHandler(data);
       navigate('/note');
-    } catch (error) {
-      console.error('Error during login:', error);
-    } finally {
-      setIsLoading(false);
     }
+
+    setIsLoading(false);
   };
 
-  if(isUserLoggedIn){
-    return null;
-  }
-
-  if(isLoading){
-    return <LoaderScreen />;
-  }
-
   return (
-    <div className='container--wrap'>
-      <p>Login Page</p>
-      <LoginForm loginHandler={onLogin} />
+    <div className="container--full-width container--padding-y">
+      {isLoading ? (
+        <LoaderScreen />
+      ) : (
+        <div className="container--note container--padding-y">
+          <div className="card-detail">
+            <h3 className='text__heading'> Login </h3>
+            <LoginForm loginHandler={onLogin} />
+          </div>
+          
+          <p> <Link to="/register"> register</Link></p>
+        </div>
+      )}
     </div>
   );
 };

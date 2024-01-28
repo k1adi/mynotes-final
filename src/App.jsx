@@ -13,6 +13,9 @@ import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import NotFoundPage from './pages/NotFoundPage';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+
 function App() {
   return (
     <div className='app'>
@@ -54,6 +57,8 @@ function App() {
       <footer className='app__footer'>
         <AppFooter />
       </footer>
+
+      <ToastContainer style={{ maxWidth: '400px', width: '90%' }} />
     </div>
   );
 }

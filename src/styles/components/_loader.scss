@@ -1,0 +1,13 @@
+.loader{
+  &__wrapper{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 113px - 114px);
+    display: grid;
+    place-items: center;
+    z-index: 10;
+    background-color: rgba($txt-light-muted, .15);
+  }
+}

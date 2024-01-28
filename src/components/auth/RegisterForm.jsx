@@ -25,15 +25,71 @@ function RegisterForm({ registerHandler }) {
   };
 
   return (
-    <form onSubmit={onSubmitHandler}>
-      <input type="text" value={name} onChange={nameChangeHandler} placeholder="Name" required/>
-      <input type="email" value={email} onChange={emailChangeHandler} placeholder="Email" required/>
-      <input type="password" value={password} onChange={passwordChangeHandler} placeholder="Password" required/>
-      <input type="password" value={confirmPassword} onChange={confirmPasswordChangeHandler} placeholder="Confirm Password" required/>
-      {!accepted && (
-        <small>password tidak sama</small>
-      )}
-      <button disabled={!accepted}>Daftar</button>
+    <form className="form__wrapper" onSubmit={onSubmitHandler}>
+      <div className="input-wrapper">
+        <label htmlFor="userName">Username</label>
+        <input 
+          type="text"
+          value={name}
+          id="userName"
+          name="userName"
+          className="form--input"
+          onChange={nameChangeHandler}
+          placeholder="Name ..." 
+          required
+        />
+      </div>
+
+      <div className="input-wrapper">
+        <label htmlFor="userEmail">Email</label>
+        <input 
+          type="email"
+          value={email}
+          id="userEmail"
+          name="userEmail"
+          className="form--input"
+          onChange={emailChangeHandler}
+          placeholder="Email..." 
+          required
+        />
+      </div>
+
+      <div className="input-wrapper">
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          value={password}
+          id="password"
+          name="password"
+          className="form--input"
+          onChange={passwordChangeHandler}
+          placeholder="Password" 
+          required
+        />
+      </div>
+
+      <div className="input-wrapper">
+        <label htmlFor="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          value={confirmPassword}
+          id="confirmPassword"
+          name="confirmPassword"
+          className="form--input"
+          onChange={confirmPasswordChangeHandler} 
+          placeholder="Confirm Password" 
+          required
+        />
+        <small className="form--alert">
+          {!accepted && (
+            <small>password tidak sama</small>
+          )}
+        </small>
+      </div>
+    
+      <div className="form__button">
+        <input type="submit" className={`button button--main ${!accepted ? 'disabled' : ''}`} value="Submit"  disabled={!accepted} />
+      </div>
     </form>
   );
 }

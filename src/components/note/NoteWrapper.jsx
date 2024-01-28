@@ -5,7 +5,7 @@ import NoteCard from './NoteCard';
 
 function NoteWrapper({ pageName, notes, onLoading, onDeleteNote }) {
   return (
-    <>
+    <div className='card__wrapper'>
       { notes.length !== 0 ? 
         notes.map(item => (
           <NoteCard
@@ -16,9 +16,11 @@ function NoteWrapper({ pageName, notes, onLoading, onDeleteNote }) {
           />
         ))
         :
-        <p>{pageName} is empty</p>
+        <div className='card__message'>
+          {pageName} is empty
+        </div>
       }
-    </>
+    </div>
   );
 }
 

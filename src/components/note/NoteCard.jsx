@@ -1,24 +1,63 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useLocale } from '../../hooks/useContext';
+import showFormattedDate from '../../utils/lang-date';
+import { ButtonText } from '../../utils/lang-content';
+
+import Swal from 'sweetalert2';
+import { FaTrashCan } from 'react-icons/fa6';
 
 function NoteCard({ note, onLoading, deleteNote }) {
-  const btnDeleteClicked = () => {
-    onLoading();
-
-    setTimeout(() => {
-      onLoading();
-      deleteNote(note.id);      
-    }, 750);
+  const { language } = useLocale();
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/note/${note.id}`);
   };
 
+  const btnDeleteClicked = () => {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Delete Note',
+      text: 'Are you sure to delete this note?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete',
+      confirmButtonColor: '#DC3545',
+    }).then((result) => {
+      if(result.isConfirmed){
+        onLoading();
+
+        setTimeout(() => {
+          onLoading();
+          deleteNote(note.id);      
+        }, 1250);
+      }
+    });
+  };
+
+  const description = note.body.replace(/<[^>]*>/g, '');
+
   return (
-    <>
-      <p>{note.title}</p>
-      <Link to={`/note/${note.id}`}>Detail</Link>
-      <button onClick={btnDeleteClicked}>Hapus</button>
-    </>
+    <div className='card__note'>
+      <div className='card__note__body' onClick={handleClick}>
+        <h3 className='text__title'> { note.title } </h3>
+        <p className='text__date'> 📅 { showFormattedDate(note.createdAt, language ) } </p>
+        <p className='text__desc'> { description.length > 150 ? 
+          `${description.substring(0, 150)}...` : description
+        } 
+        </p>
+      </div>
+      <div className='card__note__footer'>
+        <button
+          className="button button--delete"
+          onClick={btnDeleteClicked}
+        > 
+          <FaTrashCan />
+          { ButtonText[language].delete }
+        </button>
+      </div>
+    </div>
   );
 }
 

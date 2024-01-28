@@ -1,0 +1,76 @@
+.form{
+  &__wrapper{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: auto;
+
+    .input-wrapper{
+      position: relative;
+      display: block;
+      width: 100%;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+
+    label{
+      display: block;
+      margin-bottom: .5rem;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    .form--input{
+      display: block;
+      width: 100%;
+      height: auto;
+      font-size: inherit;
+      color: inherit;
+      font-family: inherit;
+      outline: none;
+      padding: .65rem 1rem;
+      background-color: var(--bg-color) !important;
+      border: solid 2px transparent;
+      border-radius: .35rem;
+      @include transition(.25s);
+
+      &:focus{
+        border: solid 2px $primary;
+      }
+    }
+
+    .form--input{
+      &::placeholder{
+        color: var(--text-muted) !important;
+      }
+
+      &:not(:placeholder-shown){
+        border: solid 2px $primary !important;
+      }
+    }
+  }
+
+  &--help{
+    color: var(--txt-muted);
+    font-style: italic;
+    display: block;
+    text-align: right;
+    padding: .3rem .3rem 0 0;
+  }
+
+  &--alert {
+    display: block;
+    color: $failed;
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  &__button{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: auto;
+    text-align: right;
+  }
+}

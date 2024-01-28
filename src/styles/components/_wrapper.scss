@@ -1,0 +1,31 @@
+%wrapper{
+  display: block;
+  position: relative;
+  height: auto;
+  padding: 1rem 0;
+}
+
+.wrapper{
+  &--header-note{
+    @extend %wrapper;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+
+  &--search-note{
+    padding: 1rem;
+    border-radius: .5rem;
+    border: solid 2px var(--bg-muted);
+    background-color: var(--bg-clear);
+    @include transition(.25s);
+  }
+
+  @include breakpoint-screen-min('sm') {
+    &--header-note{
+      flex-flow: row wrap;
+    }
+  }
+}

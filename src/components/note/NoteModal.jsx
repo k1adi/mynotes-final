@@ -29,25 +29,58 @@ function NoteModal({ addNote, closeModal }) {
   };
 
   return (
-    <>
-      <p>Note Modal <span onClick={closeModal}>Tutup</span></p>
-      <form onSubmit={onSubmitHandler}>
-        <input 
-          type="text"
-          value={titleNote}
-          placeholder="judul catatan"
-          onChange={onTitleChange}
-          maxLength={50}
-        />
-        <p>{lengthTitle}/50</p>
-        <ReactQuill
-          value={bodyNote}
-          onChange={onQuillChange}
-          placeholder='Note Description...'
-        />
-        <button>Submit</button>
-      </form>
-    </>
+    <div className="modal__wrapper">
+      <div className="modal__content">
+        <div className="modal__card">
+          <div className="modal__card__header">
+            <h2 className="modal__card__title"> Add Note</h2>
+            <button 
+              className="modal__card__close"
+              onClick={closeModal}
+            >
+              ✕
+            </button>
+          </div>
+
+          <div className="modal__card__body">
+            <form 
+              className="form__wrapper"
+              onSubmit={onSubmitHandler}
+            >
+              <div className="input-wrapper">
+                <label htmlFor="noteTitle">Title</label>
+                <input 
+                  type='text'
+                  name='noteTitle'
+                  id='noteTitle'
+                  placeholder='Note title...'
+                  className='form--input'
+                  value={titleNote}
+                  onChange={onTitleChange}
+                  required
+                />
+                <small className='form--help'>
+                  <span>{lengthTitle}</span>/50
+                </small>
+              </div>
+
+              <div className='input-wrapper'>
+                <label htmlFor="noteDesc">Description</label>
+                <ReactQuill
+                  value={bodyNote}
+                  onChange={onQuillChange}
+                  placeholder="Note Description..."
+                />
+              </div>
+
+              <div className="form__button">
+                <input type="submit" className="button button--main" value="Submit" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div> 
   );
 }
 

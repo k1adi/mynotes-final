@@ -68,22 +68,28 @@ const ArchivePage = () => {
     return null;
   }
 
-  if(isLoading){
-    return <LoaderScreen />;
-  }
-
   return (
-    <div className='container--wrap'>
-      <p>Archive Page</p>
-      <div>
-        <SearchBar keywordHandler={onKeywordChange}/>
-        <NoteWrapper 
-          pageName="Archive" 
-          notes={filteredArchive}
-          onLoading={loadingPageHandler}
-          onDeleteNote={deleteNoteHandler}
-        />
-      </div>
+    <div className="container--full-width container--padding-y">
+      {isLoading ? (
+        <LoaderScreen />
+      ) : (
+        <div className="container--wrap">
+          {filteredArchive.length !== 0 && (
+            <div className="wrapper--search-note">
+              <SearchBar keywordHandler={onKeywordChange}/>
+            </div>
+          )}
+
+          <h1 className="text--center">📂 Archive List</h1>
+
+          <NoteWrapper 
+            pageName="Archive" 
+            notes={filteredArchive}
+            onLoading={loadingPageHandler}
+            onDeleteNote={deleteNoteHandler}
+          />
+        </div>
+      )}
     </div>
   );
 };

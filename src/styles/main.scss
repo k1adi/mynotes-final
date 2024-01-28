@@ -1,15 +1,32 @@
-:root {
-  --font-color: #333;
-  --background-color: #eee;
-}
+@charset "UTF-8";
 
-[data-theme='dark'] {
-  --font-color: #eee;
-  --background-color: #333;
-}
+@charset "UTF-8";
 
-* {
-  margin: 10px;
-  color: var(--font-color);
-  background-color: var(--background-color);
-}
+// Configuration and helpers
+@import
+  'abstracts/variables',
+  'abstracts/mixins';
+
+// Base stuff
+@import
+  'base/base',
+  'base/helper',
+  'base/typography';
+
+// Layout-related sections
+@import
+  'layout/navbar',
+  'layout/footer';
+
+// Components
+@import
+  'components/button',
+  'components/card',
+  'components/forms',
+  'components/loader',
+  'components/modal',
+  'components/wrapper';
+
+// Vendors
+@import
+ 'vendors/quill';

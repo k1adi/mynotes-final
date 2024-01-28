@@ -1,0 +1,104 @@
+.card{
+  &__wrapper{
+    display: grid;
+    grid-gap: .75rem;
+    gap: .75rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(-webkit-min-content,-webkit-max-content);
+    grid-template-rows: minmax(min-content,max-content);
+    margin: 1.5rem 0;
+  }
+
+  &__note{
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    border-radius: .7rem;
+    border: solid 2px var(--bg-muted);
+    border-top: solid 3px $primary;
+    background-color: var(--bg-clear);
+    @include transition(.25s);
+    
+    &:hover{
+      @include box-shadow('0px', '5px', '1rem', '0px', var(--box-shadow));
+    }
+
+    &__body{
+      flex: 1 1;
+      padding: 1rem;
+    }
+
+    &__footer{
+      display: flex;
+      justify-content: flex-end;
+      padding: 1rem;
+      display: block;
+      border-radius: .7rem;
+      background-color: var(--bg-clear);
+    }
+  }
+
+  &__message{
+    padding: 1.25rem;
+    text-align: center;
+    background-color: rgba($warning, .4);
+    border-radius: .5rem;
+    grid-column: 1/5;
+  }
+
+  &-detail{
+    padding: 1.5rem;
+    position: relative;
+    border-radius: .5rem;
+    border-top: solid 5px $primary;
+    background-color: var(--bg-clear);
+    @include box-shadow('0px', '3px', '.5rem', '0px', var(--box-shadow));
+
+    &__float-label{
+      cursor:pointer;
+      position: absolute;
+      top: 1rem;
+      right: 1.25rem;
+      padding: .5rem .75rem;
+      font-weight: 600;
+      font-size: .85rem;
+      border-radius: .3rem;
+      color: $txt-light;
+
+      &.active {
+        background-color: rgba($color: $success, $alpha: .7);
+      }
+
+      &.archive {
+        background-color: rgba($color: $grey, $alpha: .7);
+      }
+    }
+
+    &__footer{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  @include breakpoint-screen-min('sm'){
+    &__wrapper{
+      grid-template-columns: repeat(2,1fr);
+    }
+  }
+
+  @include breakpoint-screen-min('lg'){
+    &__wrapper{
+      grid-template-columns: repeat(3,1fr);
+      grid-gap: 1rem;
+      gap: 1rem;
+    }
+  }
+
+  @include breakpoint-screen-min('xl'){
+    &__wrapper{
+      grid-gap: 1.25rem;
+      gap: 1.25rem;
+    }
+  }
+}

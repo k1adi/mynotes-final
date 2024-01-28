@@ -1,0 +1,109 @@
+.button{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  outline: none;
+  border: solid 2px transparent;
+  padding: .85rem 1.45rem .95rem 1.45rem;
+  font-family: inherit;
+  font-size: 1rem;
+  border-radius: .5rem;
+  cursor: pointer;
+  text-decoration: none;
+
+  &--main{
+    background-color: $primary;
+    color: $txt-light;
+    @include transition(.15s);
+
+    @include on-event(false){
+      background-color: darken($primary, 5%);
+    }
+
+    &.disabled{
+      background-color: rgba($color: $primary, $alpha: .6) !important;
+      cursor: not-allowed !important;
+    }
+  }
+
+  &--back{
+    color: $txt-light;
+    background-color: $primary;
+    font-weight: 500;
+  }
+
+  &--archive {
+    color: $txt-light;
+    font-weight: 500;
+
+    &.active {
+      background-color: $success;
+    }
+
+    &.archive {
+      background-color: $grey;
+    }
+  }
+
+  &--delete{
+    justify-self: flex-end;
+    font-weight: 500;
+    border-radius: 0;
+    color: $txt-light;
+    background-color: $failed;
+    border-radius: .3rem;
+    margin-left: auto;
+  }
+
+  &--outline{
+    &-main {
+      background-color: transparent;
+      color: $primary;
+      border: solid 2px $primary;
+    }
+  }
+
+  &--translate {
+    padding: .5rem .25rem !important;
+    color: $txt-light;
+    font-size: 1.15rem;
+    background: transparent !important;
+  }
+
+  &--toggle-theme {
+    padding: .5rem .25rem !important;
+    font-size: 1.25rem;
+    line-height: 0;
+    margin-right: .5rem;
+    background: transparent !important;
+
+    &.light{
+      color: $warning;
+    }
+    &.dark{
+      color: $txt-light;
+    }
+  }
+
+  &--login {
+    font-weight: 700;
+    display: none !important;
+    padding: .15rem 1.25rem !important;
+
+    & > a {
+      color: $txt-dark;
+      font-weight: 700;
+      text-decoration: none;
+    }
+  }
+
+  @include breakpoint-screen-min('sm'){
+    padding: .75rem 1.75rem;
+  }
+
+  @include breakpoint-screen-min('md'){
+    &--login {
+      display: flex !important;
+    }
+  }
+}

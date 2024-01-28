@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 
 function SearchBar({ keyword, keywordHandler }) {
   return (
-    <input
-      type="search"
-      value={keyword}
-      placeholder="Cari Judul Catatan"
-      onChange={(event) => keywordHandler(event.target.value)}
-    />
+    <div className="form__wrapper">
+      <input
+        type="search"
+        value={keyword}
+        className="form--input"
+        placeholder="🔍 Cari Judul Catatan"
+        onChange={(event) => keywordHandler(event.target.value)}
+      />
+    </div>
   );
 }
 
