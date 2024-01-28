@@ -56,8 +56,9 @@ function AppNavbar() {
           ))}
 
           {isUserLoggedIn ? (
-            <li className="list-login" onClick={onLogoutHandler}> 
-              <a href="javascript:void(0)">Logout </a>
+            <li className="list-login"> 
+              <a href="#" onClick={(e) => { 
+                e.preventDefault(); onLogoutHandler();}}>Logout</a>
             </li>
           ) : (
             <li className={location.pathname === 'login' ? 'list-login active' : 'list-login'}>
