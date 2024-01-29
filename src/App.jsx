@@ -15,12 +15,18 @@ import NotFoundPage from './pages/NotFoundPage';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import { useAuth } from './hooks/useContext';
+import { useAuth, useTheme } from './hooks/useContext';
 
 function App() {
   const { initializePage } = useAuth();
-  if (initializePage) return;
+  const { theme } = useTheme();
+
+  React.useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, []);
   
+  if (initializePage) return;
+
   return (
     <div className='app'>
       <header className='app__header'>
