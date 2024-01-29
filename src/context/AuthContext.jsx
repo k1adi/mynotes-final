@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { getAccessToken, getUserLogged, putAccessToken } from '../utils/network-data';
 
 const AuthContext = React.createContext({
+  initializePage: true,
   isUserLoggedIn: false,
   accessToken: '',
   userProfile: null,
+  setInitiliaze: () => {},
   onLoginHandler: () => {},
   onLogoutHandler: () => {},
 });
@@ -15,6 +17,7 @@ class AuthContextProvider extends React.Component {
     super(props);
     
     this.state = {
+      initializePage: true,
       isUserLoggedIn: false,
       accessToken: '',
       userProfile: null,
@@ -30,6 +33,8 @@ class AuthContextProvider extends React.Component {
 
     if (token) {
       this.getUserProfile(token);
+    } else {
+      this.setState({ initializePage: false });
     }
   }
 
@@ -43,6 +48,8 @@ class AuthContextProvider extends React.Component {
         userProfile: data,
       });
     }
+
+    this.setState({ initializePage: false });
   }
 
   onLoginHandler = async ({ accessToken }) => {
@@ -61,11 +68,17 @@ class AuthContextProvider extends React.Component {
 
   render() {
     const authContextValue = {
+      initializePage: this.state.initializePage,
       isUserLoggedIn: this.state.isUserLoggedIn,
       accessToken: this.state.accessToken,
       userProfile: this.state.userProfile,
       onLoginHandler: this.onLoginHandler,
       onLogoutHandler: this.onLogoutHandler,
+      setInitiliaze: (value) => {
+        this.setState({
+          initializePage: value,
+        });
+      },
     };
 
     return (
