@@ -2,7 +2,7 @@
   &__wrapper{
     display: block;
     width: 100%;
-    height: 250px;
+    height: 220px;
     position: relative;
     border-radius: .75rem;
   }
@@ -35,6 +35,7 @@
     p {
       font-size: 1.25rem;
       margin-bottom: 0;
+      display: none;
     }
   }
 
@@ -46,6 +47,10 @@
     &__content {
       & > h1 {
         font-size: 3rem;
+      }
+
+      & > p {
+        display: block;
       }
     }
   }
