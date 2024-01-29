@@ -3,7 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NoteCard from './NoteCard';
 
+import { useLocale } from '../../hooks/useContext';
+import { PageContent } from '../../utils/lang-content';
+
 function NoteWrapper({ pageName, notes, onLoading, onDeleteNote }) {
+  const { language } = useLocale();
+
   return (
     <div className='card__wrapper'>
       { notes.length !== 0 ? 
@@ -17,7 +22,8 @@ function NoteWrapper({ pageName, notes, onLoading, onDeleteNote }) {
         ))
         :
         <div className='card__message'>
-          {pageName} is empty
+          {pageName == 'note' && PageContent[language].noteEmpty }
+          {pageName == 'archive' && PageContent[language].archiveEmpty }
         </div>
       }
     </div>

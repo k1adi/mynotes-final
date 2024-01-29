@@ -2,11 +2,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useLocale } from '../../hooks/useContext';
+import { FormContent, ButtonContent, PageContent } from '../../utils/lang-content';
+
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 
+
 function NoteModal({ addNote, closeModal }) {
+  const { language } = useLocale();
   const [titleNote, setTitleNote] = React.useState('');
   const [bodyNote, setBodyNote] = React.useState('');
   const [lengthTitle, setLengthTitle] = React.useState(0);
@@ -33,7 +38,7 @@ function NoteModal({ addNote, closeModal }) {
       <div className="modal__content">
         <div className="modal__card">
           <div className="modal__card__header">
-            <h2 className="modal__card__title"> Add Note</h2>
+            <h2 className="modal__card__title"> {PageContent[language].modal} </h2>
             <button 
               className="modal__card__close"
               onClick={closeModal}
@@ -48,33 +53,33 @@ function NoteModal({ addNote, closeModal }) {
               onSubmit={onSubmitHandler}
             >
               <div className="input-wrapper">
-                <label htmlFor="noteTitle">Title</label>
+                <label htmlFor="noteTitle">{FormContent[language].titleLabel}</label>
                 <input 
-                  type='text'
-                  name='noteTitle'
-                  id='noteTitle'
-                  placeholder='Note title...'
-                  className='form--input'
+                  type="text"
+                  name="noteTitle"
+                  id="noteTitle"
+                  placeholder={FormContent[language].titlePlaceholder}
+                  className="form--input"
                   value={titleNote}
                   onChange={onTitleChange}
                   required
                 />
-                <small className='form--help'>
+                <small className="form--help">
                   <span>{lengthTitle}</span>/50
                 </small>
               </div>
 
-              <div className='input-wrapper'>
-                <label htmlFor="noteDesc">Description</label>
+              <div className="input-wrapper">
+                <label htmlFor="noteDesc">{FormContent[language].bodyLabel}</label>
                 <ReactQuill
                   value={bodyNote}
                   onChange={onQuillChange}
-                  placeholder="Note Description..."
+                  placeholder={FormContent[language].bodyPlaceholder}
                 />
               </div>
 
               <div className="form__button">
-                <input type="submit" className="button button--main" value="Submit" />
+                <input type="submit" className="button button--main" value={ButtonContent[language].submit} />
               </div>
             </form>
           </div>

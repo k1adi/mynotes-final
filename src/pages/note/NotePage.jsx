@@ -1,18 +1,19 @@
 import React from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { useAuth, useLocale } from '../../hooks/useContext';
+import CONFIG from '../../utils/config';
+import { ButtonContent, PageContent, ToastContent } from '../../utils/lang-content';
 import { addNote, deleteNote, getActiveNotes } from '../../utils/network-data';
+import { useAuth, useLocale } from '../../hooks/useContext';
 
 import SearchBar from '../../components/ui/SearchBar';
 import NoteModal from '../../components/note/NoteModal';
 import NoteWrapper from '../../components/note/NoteWrapper';
 import LoaderScreen from '../../components/ui/LoaderScreen';
-import { ButtonText } from '../../utils/lang-content';
 
 import { FaPencil } from 'react-icons/fa6';
 import { toast } from 'react-toastify';
-import CONFIG from '../../utils/config';
+
 
 const NotePage = () => {
   const navigate = useNavigate();
@@ -60,31 +61,35 @@ const NotePage = () => {
   };
 
   const createNoteHandler = async ({title, body}) => {
-    try {
-      setIsLoading(true);
-      await addNote({title, body});
+    setIsLoading(true);
 
-      const { data } = await getActiveNotes();
-      setNotes(data);
-      setIsModalShown(false);
-    } catch (error) {
-      console.error('Error added note:', error);
-    } finally {
-      setIsLoading(false);
+    const { error } = await addNote({title, body});
+
+    if(error) {
+      toast.error(ToastContent[language].noteCreateFailed, CONFIG.TOAST_EMITTER);
+    } else {
+      toast.success(ToastContent[language].noteCreateSuccess, CONFIG.TOAST_EMITTER);
     }
+
+    const { data } = await getActiveNotes();
+
+    setNotes(data);
+    setIsLoading(false);
+    setIsModalShown(false);
   };
 
   const deleteNoteHandler = async (id) => {
     setIsLoading(true);
 
     const { error } =  await deleteNote(id);
-    if(!error) {
-      toast.success('success to delete note', CONFIG.TOAST_EMITTER);
-      const { data } = await getActiveNotes();
-      setNotes(data);
+    if(error) {
+      toast.error(ToastContent[language].noteDeleteFailed, CONFIG.TOAST_EMITTER);
     } else {
-      toast.error('failed to delete note', CONFIG.TOAST_EMITTER);
+      toast.success(ToastContent[language].noteDeleteSuccess, CONFIG.TOAST_EMITTER);
     }
+
+    const { data } = await getActiveNotes();
+    setNotes(data);
 
     setIsLoading(false);
   };
@@ -110,7 +115,7 @@ const NotePage = () => {
             <h1 className="text__welcome">👋 Hi, {userProfile && userProfile.name} </h1>
             <button className="button button--main" onClick={toggleModalHandler}>
               <FaPencil />
-              {ButtonText[language].create}
+              {ButtonContent[language].create}
             </button>
           </div>
           {filteredNotes.length !== 0 && (
@@ -119,10 +124,10 @@ const NotePage = () => {
             </div>
           )}
           
-          <h1 className="text--center">📋 Note List</h1>
+          <h1 className="text--center">📋 { PageContent[language].note }</h1>
           
           <NoteWrapper 
-            pageName="Note"
+            pageName="note"
             notes={filteredNotes}
             onLoading={loadingPageHandler}
             onDeleteNote={deleteNoteHandler}

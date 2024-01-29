@@ -4,10 +4,18 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: calc(100vh - 113px - 114px);
+    height: calc(100vh - 106px);
     display: grid;
     place-items: center;
     z-index: 10;
     background-color: rgba($txt-light-muted, .15);
+  }
+
+  @include breakpoint-screen-min('sm'){
+
+  }
+
+  @include breakpoint-screen-min('sm'){
+
   }
 }

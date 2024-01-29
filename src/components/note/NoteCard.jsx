@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { useLocale } from '../../hooks/useContext';
 import showFormattedDate from '../../utils/lang-date';
-import { ButtonText } from '../../utils/lang-content';
+import { ButtonContent, SwalContent } from '../../utils/lang-content';
 
 import Swal from 'sweetalert2';
 import { FaTrashCan } from 'react-icons/fa6';
@@ -19,10 +19,11 @@ function NoteCard({ note, onLoading, deleteNote }) {
   const btnDeleteClicked = () => {
     Swal.fire({
       icon: 'warning',
-      title: 'Delete Note',
-      text: 'Are you sure to delete this note?',
+      title: SwalContent[language].title,
+      text: SwalContent[language].text,
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete',
+      confirmButtonText: SwalContent[language].confirmButton,
+      cancelButtonText: SwalContent[language].cancelButton,
       confirmButtonColor: '#DC3545',
     }).then((result) => {
       if(result.isConfirmed){
@@ -54,7 +55,7 @@ function NoteCard({ note, onLoading, deleteNote }) {
           onClick={btnDeleteClicked}
         > 
           <FaTrashCan />
-          { ButtonText[language].delete }
+          { ButtonContent[language].delete }
         </button>
       </div>
     </div>

@@ -2,13 +2,15 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useAuth } from '../../hooks/useContext';
+import { useAuth, useLocale } from '../../hooks/useContext';
 import { register } from '../../utils/network-data';
 import RegisterForm from '../../components/auth/RegisterForm';
 import LoaderScreen from '../../components/ui/LoaderScreen';
+import { PageContent } from '../../utils/lang-content';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const { language } = useLocale();
   const { isUserLoggedIn } = useAuth();
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -41,8 +43,11 @@ const RegisterPage = () => {
             <h3 className='text__heading'> Register </h3>
             <RegisterForm registerHandler={onRegister}/>
           </div>
-          
-          <p> <Link to="/login"> login</Link></p>
+
+          <p> 
+            {PageContent[language].register} 
+            <Link to="/login" style={{ color: '#185ADB' }}> Login</Link>
+          </p>
         </div>
       )}
     </div>

@@ -2,7 +2,7 @@
 import React from 'react';
 
 import { useLocale } from '../hooks/useContext';
-import { FooterText } from '../utils/lang-content';
+import { FooterContent } from '../utils/lang-content';
 
 function AppFooter() {
   const { language } = useLocale();
@@ -11,9 +11,9 @@ function AppFooter() {
     <>
       <p> Made with <span className="visually-hidden hide-text">love</span> ❤️ by Rizki Adi <span className="footer__emoji">🐢</span> </p>
       <small> 
-        { FooterText[language].submission }
+        { FooterContent[language].submission }
         <a href="https://www.dicoding.com/academies/413" target="_blank" rel="noreferrer" className="footer__link"> 
-          { FooterText[language].link }
+          { FooterContent[language].link }
         </a>
       </small>
     </>

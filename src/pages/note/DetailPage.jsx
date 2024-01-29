@@ -4,8 +4,11 @@ import { archiveNote, getNote, unarchiveNote } from '../../utils/network-data';
 import { useAuth, useLocale } from '../../hooks/useContext';
 import LoaderScreen from '../../components/ui/LoaderScreen';
 import showFormattedDate from '../../utils/lang-date';
+import { ButtonContent, ToastContent } from '../../utils/lang-content';
 
 import { FaArrowLeftLong, FaBookmark, FaBookOpen } from 'react-icons/fa6';
+import { toast } from 'react-toastify';
+import CONFIG from '../../utils/config';
 
 const DetailPage = () => {
   const { id } = useParams();
@@ -53,7 +56,7 @@ const DetailPage = () => {
     }
 
     setNote((prevNote) => ({ ...prevNote, archived: !prevNote.archived }));
-
+    toast.success(ToastContent[language].noteArchiveChange, CONFIG.TOAST_EMITTER);
     setIsLoading(false); 
   };
 
@@ -77,7 +80,7 @@ const DetailPage = () => {
                   className="button button--back button--large"
                   onClick={() => navigate(-1)}
                 >
-                  <FaArrowLeftLong /> Back
+                  <FaArrowLeftLong /> {ButtonContent[language].back}
                 </button>
                 <button 
                   className={`button button--archive ${labelArchive}`}

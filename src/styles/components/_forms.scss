@@ -21,6 +21,7 @@
     }
 
     .form--input{
+      position: relative;
       display: block;
       width: 100%;
       height: auto;
@@ -46,6 +47,22 @@
 
       &:not(:placeholder-shown){
         border: solid 2px $primary !important;
+      }
+
+      // &--password{
+
+      // }
+    }
+
+    .form-toggle{
+      &--password{
+        position: absolute;
+        bottom: .2rem;
+        right: .5rem;
+        padding: .5rem;
+        font-size: 1.5rem;
+        line-height: 0;
+        cursor: pointer;
       }
     }
   }

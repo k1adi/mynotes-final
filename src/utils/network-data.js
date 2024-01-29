@@ -35,8 +35,7 @@ async function login({ email, password }) {
     toast.warn(responseJson.message, CONFIG.TOAST_EMITTER);
     return { error: true, data: null };
   }
-
-  toast.success('Login berhasil', CONFIG.TOAST_EMITTER);
+  
   return { error: false, data: responseJson.data };
 }
 
@@ -57,6 +56,7 @@ async function register({ name, email, password }) {
     return { error: true };
   }
   
+  toast.success('Registrasi berhasil', CONFIG.TOAST_EMITTER);
   return { error: false };
 }
 

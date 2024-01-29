@@ -1,15 +1,20 @@
 import React from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { useAuth } from '../../hooks/useContext';
+import CONFIG from '../../utils/config';
+import { PageContent, ToastContent } from '../../utils/lang-content';
 import { deleteNote, getArchivedNotes } from '../../utils/network-data';
+import { useAuth, useLocale } from '../../hooks/useContext';
 
 import SearchBar from '../../components/ui/SearchBar';
 import NoteWrapper from '../../components/note/NoteWrapper';
 import LoaderScreen from '../../components/ui/LoaderScreen';
 
+import { toast } from 'react-toastify';
+
 const ArchivePage = () => {
   const navigate = useNavigate();
+  const { language } = useLocale();
   const { isUserLoggedIn } = useAuth();
   const [archived, setArchive] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -19,19 +24,20 @@ const ArchivePage = () => {
   });
 
   React.useEffect(() => {
+    const fetchArchiveNote = async () => {
+      const { error, data } = await getArchivedNotes();
+      if (!error) {
+        setArchive(data);
+      }
+
+      setIsLoading(false);
+    };
+
     if(isUserLoggedIn){
-      getArchivedNotes().
-        then(({ data }) => {
-          setArchive(data);
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+      fetchArchiveNote();
     } else {
       navigate('/login');
+      return;
     }
   }, [isUserLoggedIn, navigate]);
 
@@ -47,26 +53,24 @@ const ArchivePage = () => {
   });
 
   const deleteNoteHandler = async (id) => {
-    try {
-      setIsLoading(true);
-      await deleteNote(id);
+    setIsLoading(true);
 
-      const { data } = await getArchivedNotes();
-      setArchive(data);
-    } catch (error) {
-      console.error('Error deleting note:', error);
-    } finally {
-      setIsLoading(false);
+    const { error } =  await deleteNote(id);
+    if(error) {
+      toast.error(ToastContent[language].archiveDeleteFailed, CONFIG.TOAST_EMITTER);
+    } else {
+      toast.success(ToastContent[language].archiveDeleteSuccess, CONFIG.TOAST_EMITTER);
     }
+
+    const { data } = await getArchivedNotes();
+    setArchive(data);
+
+    setIsLoading(false);
   };
 
   const loadingPageHandler = () => {
     setIsLoading((prevIsLoading) => !prevIsLoading);
   };
-
-  if(!isUserLoggedIn){
-    return null;
-  }
 
   return (
     <div className="container--full-width container--padding-y">
@@ -80,10 +84,10 @@ const ArchivePage = () => {
             </div>
           )}
 
-          <h1 className="text--center">📂 Archive List</h1>
+          <h1 className="text--center">📂 { PageContent[language].archive }</h1>
 
           <NoteWrapper 
-            pageName="Archive" 
+            pageName="archive" 
             notes={filteredArchive}
             onLoading={loadingPageHandler}
             onDeleteNote={deleteNoteHandler}

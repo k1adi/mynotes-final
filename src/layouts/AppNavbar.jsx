@@ -2,14 +2,16 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth, useLocale, useTheme } from '../hooks/useContext';
-import { NavbarText } from '../utils/lang-content';
+import { NavbarContent, ToastContent } from '../utils/lang-content';
 import NotesLogo from '../assets/mynotes-logo.png';
 
 import { FaRegSun, FaMoon  } from 'react-icons/fa6';
 import { GrLanguage } from 'react-icons/gr';
+import { toast } from 'react-toastify';
+import CONFIG from '../utils/config';
 
 function AppNavbar() {
-  const { isUserLoggedIn, userProfile, onLogoutHandler } = useAuth();
+  const { isUserLoggedIn, onLogoutHandler } = useAuth();
   const { theme, toggleThemeHandler } = useTheme();
   const { language, toggleLanguageHandler } = useLocale();
 
@@ -26,9 +28,10 @@ function AppNavbar() {
     setIsNavMobileShown(!isNavMobileShown);
   };
 
-  if(isUserLoggedIn){
-    console.log(userProfile);
-  }
+  const handleNavLogout = () => {
+    toast.success(ToastContent[language].logout, CONFIG.TOAST_EMITTER);
+    onLogoutHandler();
+  };
 
   return (
     <nav className='nav'>
@@ -50,7 +53,7 @@ function AppNavbar() {
           {links.map((link, index) => (
             <li key={index} className={location.pathname === link.to ? 'active' : ''}>
               <Link to={link.path} onClick={handleNavToggle}>
-                {NavbarText[language].list[index]}
+                {NavbarContent[language].list[index]}
               </Link>
             </li>
           ))}
@@ -86,7 +89,7 @@ function AppNavbar() {
         {isUserLoggedIn ? (
           <button 
             className="button button--login"
-            onClick={onLogoutHandler}
+            onClick={handleNavLogout}
           >
             Logout
           </button>

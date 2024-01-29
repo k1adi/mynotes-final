@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import useInput from '../../hooks/useInput';
 
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa6';
+
 function LoginForm({ loginHandler }) {
   const [email, emailChangeHandler] = useInput('');
   const [password, passwordChangeHandler] = useInput('');
@@ -29,7 +31,7 @@ function LoginForm({ loginHandler }) {
           name="userEmail"
           className="form--input"
           onChange={emailChangeHandler}
-          placeholder="Email..." 
+          placeholder="Email . . ." 
           required
         />
       </div>
@@ -41,15 +43,20 @@ function LoginForm({ loginHandler }) {
           value={password}
           id="password"
           name="password"
-          className="form--input"
+          className="form--input form-input--password"
           onChange={passwordChangeHandler}
-          placeholder="Password" 
+          placeholder="Password . . ." 
           required
         />
+        {password.length != 0 && (
+          <span
+            className="form-toggle--password"
+            onClick={togglePasswordVisibility}
+          >
+            {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+          </span>
+        )}
       </div>
-      <span onClick={togglePasswordVisibility}>
-        {showPassword ? 'Hide' : 'Show'}
-      </span>
       <div className="form__button">
         <input type="submit" className="button button--main" value="Login"/>
       </div>

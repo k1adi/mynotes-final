@@ -11,6 +11,10 @@
   cursor: pointer;
   text-decoration: none;
 
+  & > svg {
+    line-height: 0;
+  }
+
   &--main{
     background-color: $primary;
     color: $txt-light;

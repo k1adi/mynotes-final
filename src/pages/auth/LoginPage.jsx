@@ -3,27 +3,32 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { login } from '../../utils/network-data';
-import { useAuth } from '../../hooks/useContext';
+import { useAuth, useLocale } from '../../hooks/useContext';
 import LoginForm from '../../components/auth/LoginForm';
 import LoaderScreen from '../../components/ui/LoaderScreen';
+import { PageContent, ToastContent } from '../../utils/lang-content';
+import { toast } from 'react-toastify';
+import CONFIG from '../../utils/config';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { language } = useLocale();
   const { isUserLoggedIn, onLoginHandler } = useAuth();
-  const [ isLoading, setIsLoading ] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
     if(isUserLoggedIn){
       navigate(-1);
       return;
     }
-  }, [isUserLoggedIn, navigate]);
+  }, [isUserLoggedIn]);
 
   const onLogin = async ({ email, password }) => {
     setIsLoading(true);
 
     const { error, data } = await login({ email, password });
     if (!error) {
+      toast.success(ToastContent[language].login, CONFIG.TOAST_EMITTER);
       onLoginHandler(data);
       navigate('/note');
     }
@@ -41,8 +46,11 @@ const LoginPage = () => {
             <h3 className='text__heading'> Login </h3>
             <LoginForm loginHandler={onLogin} />
           </div>
-          
-          <p> <Link to="/register"> register</Link></p>
+
+          <p>
+            { PageContent[language].login }
+            <Link to="/register" style={{ color: '#185ADB' }}> {PageContent[language].signUp}</Link>
+          </p>
         </div>
       )}
     </div>

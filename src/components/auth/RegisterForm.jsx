@@ -3,8 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import useInput from '../../hooks/useInput';
+import { ButtonContent, FormContent } from '../../utils/lang-content';
+import { useLocale } from '../../hooks/useContext';
 
 function RegisterForm({ registerHandler }) {
+  const { language } = useLocale();
   const [name, nameChangeHandler] = useInput('');
   const [email, emailChangeHandler] = useInput('');
   const [password, passwordChangeHandler] = useInput('');
@@ -27,7 +30,7 @@ function RegisterForm({ registerHandler }) {
   return (
     <form className="form__wrapper" onSubmit={onSubmitHandler}>
       <div className="input-wrapper">
-        <label htmlFor="userName">Username</label>
+        <label htmlFor="userName">{FormContent[language].userName}</label>
         <input 
           type="text"
           value={name}
@@ -35,7 +38,7 @@ function RegisterForm({ registerHandler }) {
           name="userName"
           className="form--input"
           onChange={nameChangeHandler}
-          placeholder="Name ..." 
+          placeholder={`${FormContent[language].userName} . . .`} 
           required
         />
       </div>
@@ -49,7 +52,7 @@ function RegisterForm({ registerHandler }) {
           name="userEmail"
           className="form--input"
           onChange={emailChangeHandler}
-          placeholder="Email..." 
+          placeholder="Email . . ." 
           required
         />
       </div>
@@ -63,13 +66,13 @@ function RegisterForm({ registerHandler }) {
           name="password"
           className="form--input"
           onChange={passwordChangeHandler}
-          placeholder="Password" 
+          placeholder="Password . . ." 
           required
         />
       </div>
 
       <div className="input-wrapper">
-        <label htmlFor="confirmPassword">Confirm Password</label>
+        <label htmlFor="confirmPassword"> {FormContent[language].confirmPassword}</label>
         <input
           type="password"
           value={confirmPassword}
@@ -77,18 +80,18 @@ function RegisterForm({ registerHandler }) {
           name="confirmPassword"
           className="form--input"
           onChange={confirmPasswordChangeHandler} 
-          placeholder="Confirm Password" 
+          placeholder={FormContent[language].confirmPassword}
           required
         />
         <small className="form--alert">
           {!accepted && (
-            <small>password tidak sama</small>
+            <small>{FormContent[language].passwordAlert}</small>
           )}
         </small>
       </div>
     
       <div className="form__button">
-        <input type="submit" className={`button button--main ${!accepted ? 'disabled' : ''}`} value="Submit"  disabled={!accepted} />
+        <input type="submit" className={`button button--main ${!accepted ? 'disabled' : ''}`} value={ButtonContent[language].submit}  disabled={!accepted} />
       </div>
     </form>
   );
