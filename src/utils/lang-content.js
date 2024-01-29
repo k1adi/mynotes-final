@@ -25,6 +25,7 @@ const ButtonContent = {
     back: 'Back',
     backToHome: 'Back to home',
     submit: 'Submit',
+    started: 'Get started'
   },
   id: {
     create: 'Tambah Catatan',
@@ -32,6 +33,7 @@ const ButtonContent = {
     back: 'Kembali',
     backToHome: 'Kembali ke beranda',
     submit: 'Kirim',
+    started: 'Mulai sekarang'
   }
 };
 
@@ -123,6 +125,33 @@ const PageContent = {
   }
 };
 
+const LandingContent = {
+  en: {
+    bannerTitle: 'The simplest way to keep notes',
+    bannerDesc: 'All your notes, synced on all your browser',
+    content: [
+      { title: 'Use it everywhere', desc: 'Access your notes from anywhere, anytime. Your notes, your way' },
+      { title: 'Cloud storage', desc: 'Securely store your notes in the cloud. Access them whenever and wherever you need.' },
+      { title: 'Free to use', desc: 'Enjoy our services at no cost. Experience the freedom of MyNotes without any charges.' },
+      { title: 'Easy to use', desc: 'MyNotes provides an intuitive and user-friendly interface for effortless use.' },
+    ],
+    startedTitle: 'Ready to get Started?',
+    startedDesc: 'Try MyNotes for Free, and take your notes to the moon 🚀',
+  },
+  id: {
+    bannerTitle: 'Cara sederhana untuk menyimpan catatan',
+    bannerDesc: 'Semua catatan Anda, disinkronkan di semua browser Anda',
+    content: [
+      { title: 'Gunakan di mana saja', desc: 'Akses catatan Anda dari mana saja, kapan saja. Catatan Anda, gaya Anda' },
+      { title: 'Penyimpanan Cloud', desc: 'Simpan catatan Anda dengan aman di cloud. Akses kapan saja dan di mana saja Anda butuhkan.' },
+      { title: 'Gratis untuk digunakan', desc: 'Nikmati layanan kami tanpa biaya. Rasakan kebebasan MyNotes tanpa biaya apapun.' },
+      { title: 'Mudah digunakan', desc: 'MyNotes menyediakan antarmuka yang intuitif dan mudah digunakan.' },
+    ],
+    startedTitle: 'Siap untuk Memulai?',
+    startedDesc: 'Coba MyNotes secara Gratis, dan bawa catatan Anda ke bulan 🚀',
+  }
+};
+
 const NotFoundContent = {
   en: {
     desc: 'Sorry, the page you are looking for is not found.'
@@ -145,5 +174,6 @@ export {
   ToastContent,
   FormContent,
   PageContent,
+  LandingContent,
   NotFoundContent,
 };

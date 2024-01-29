@@ -21,6 +21,7 @@ const LoginPage = () => {
       navigate(-1);
       return;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUserLoggedIn]);
 
   const onLogin = async ({ email, password }) => {

@@ -69,6 +69,18 @@
   &--padding-bottom{
     padding-bottom: 2rem;
   }
+
+  &--muted{
+    background-color: var(--bg-muted);
+  }
+
+  &--home{
+    @extend %container;
+    width: $relative-width;
+    max-width: $max-width;
+    padding: 4rem 0;
+    margin: 0 auto;
+  }
   
   @include breakpoint-screen-min('md'){
     &--padding-y{

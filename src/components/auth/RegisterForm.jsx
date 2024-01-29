@@ -91,7 +91,7 @@ function RegisterForm({ registerHandler }) {
       </div>
     
       <div className="form__button">
-        <input type="submit" className={`button button--main ${!accepted ? 'disabled' : ''}`} value={ButtonContent[language].submit}  disabled={!accepted} />
+        <input type="submit" className={`button button--main ${!accepted ? 'disabled' : ''}`} value={ButtonContent[language].submit} disabled={!accepted} />
       </div>
     </form>
   );

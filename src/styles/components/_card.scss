@@ -1,4 +1,41 @@
 .card{
+  &--home {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(-webkit-min-content,-webkit-max-content);
+    grid-template-rows: minmax(min-content,max-content);
+
+    &__item {
+      padding: 0 1rem;
+    }
+
+    &__title {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .25rem 1rem;
+      font-weight: 500;
+      border-left: solid 3px $primary;
+
+      & > svg {
+        color: $primary !important;
+        font-size: 1.15rem;
+        line-height: 0;
+      }
+    }
+
+    &__desc {
+      padding: .75rem 0 1rem;
+      
+      & > p {
+        width: 90%;
+        color: var(--txt-muted);
+        margin: 0;
+      }
+    }
+  }
+
   &__wrapper{
     display: grid;
     grid-gap: .75rem;
@@ -82,6 +119,7 @@
   }
 
   @include breakpoint-screen-min('sm'){
+    &--home,
     &__wrapper{
       grid-template-columns: repeat(2,1fr);
     }
@@ -96,6 +134,10 @@
   }
 
   @include breakpoint-screen-min('xl'){
+    &--home {
+      grid-template-columns: repeat(4,1fr);
+    }
+
     &__wrapper{
       grid-gap: 1.25rem;
       gap: 1.25rem;

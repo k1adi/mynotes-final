@@ -15,6 +15,22 @@
     line-height: 0;
   }
 
+  &--home {
+    display: inline-block;
+    margin-top: 1rem;
+    outline: none;
+    border: solid 2px transparent;
+    padding: .85rem 1.45rem .95rem 1.45rem;
+    font-family: inherit;
+    font-size: 1rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    background-color: $primary;
+    font-weight: 500;
+    color: $txt-light;
+    text-decoration: none;
+  }
+
   &--main{
     background-color: $primary;
     color: $txt-light;

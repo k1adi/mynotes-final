@@ -25,6 +25,7 @@ function App() {
   React.useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     document.documentElement.setAttribute('lang', language);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (initializePage) return;
