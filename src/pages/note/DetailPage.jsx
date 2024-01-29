@@ -4,7 +4,7 @@ import { archiveNote, getNote, unarchiveNote } from '../../utils/network-data';
 import { useAuth, useLocale } from '../../hooks/useContext';
 import LoaderScreen from '../../components/ui/LoaderScreen';
 import showFormattedDate from '../../utils/lang-date';
-import { ButtonContent, ToastContent } from '../../utils/lang-content';
+import { ButtonContent, PageContent, ToastContent } from '../../utils/lang-content';
 
 import { FaArrowLeftLong, FaBookmark, FaBookOpen } from 'react-icons/fa6';
 import { toast } from 'react-toastify';
@@ -61,7 +61,8 @@ const DetailPage = () => {
   };
 
   if (note) {
-    const labelArchive = note.archived ? 'archive' : 'active';
+    const labelArchive = note.archived ? PageContent[language].archive : PageContent[language].active;
+    const classArchive = note.archived ? 'archive' : 'active';
     const archiveIcon = note.archived ? <FaBookmark /> : <FaBookOpen />;
 
     return (
@@ -83,7 +84,7 @@ const DetailPage = () => {
                   <FaArrowLeftLong /> {ButtonContent[language].back}
                 </button>
                 <button 
-                  className={`button button--archive ${labelArchive}`}
+                  className={`button button--archive ${classArchive}`}
                   onClick={handleToggleArchive}
                 >
                   {archiveIcon} {labelArchive}

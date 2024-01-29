@@ -43,7 +43,7 @@ function LoginForm({ loginHandler }) {
           value={password}
           id="password"
           name="password"
-          className="form--input form-input--password"
+          className="form--input form--input__password"
           onChange={passwordChangeHandler}
           placeholder="Password . . ." 
           required

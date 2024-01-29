@@ -118,13 +118,13 @@ const NotePage = () => {
               {ButtonContent[language].create}
             </button>
           </div>
-          {filteredNotes.length !== 0 && (
+          {notes.length !== 0 && (
             <div className="wrapper--search-note">
               <SearchBar keywordHandler={onKeywordChange}/>
             </div>
           )}
           
-          <h1 className="text--center">📋 { PageContent[language].note }</h1>
+          <h1 className="text--center">📋 { PageContent[language].noteList }</h1>
           
           <NoteWrapper 
             pageName="note"

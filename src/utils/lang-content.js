@@ -98,24 +98,28 @@ const FormContent = {
 
 const PageContent = {
   en: {
-    note: 'Note List',
+    noteList: 'Note List',
     noteEmpty: 'Note is empty',
-    archive: 'Archive List',
+    archiveList: 'Archive List',
     archiveEmpty: 'Archive is empty',
     login: 'Create new account ',
     signUp: 'Register',
     register: 'Have an account? ',
     modal: 'Add Note',
+    active: 'Active',
+    archive: 'Archive'
   },
   id: {
-    note: 'Daftar Catatan',
+    noteList: 'Daftar Catatan',
     noteEmpty: 'Tidak ada catatan',
-    archive: 'Daftar Arsip',
+    archiveList: 'Daftar Arsip',
     archiveEmpty: 'Tidak ada arsip',
     login: 'Tidak punya akun? ',
     signUp: 'Daftar',
     register: 'Sudah punya akun? ',
     modal: 'Tambah Catatan',
+    active: 'Aktif',
+    archive: 'Arsip'
   }
 };
 

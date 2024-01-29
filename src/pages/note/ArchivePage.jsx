@@ -78,13 +78,13 @@ const ArchivePage = () => {
         <LoaderScreen />
       ) : (
         <div className="container--wrap">
-          {filteredArchive.length !== 0 && (
+          {archived.length !== 0 && (
             <div className="wrapper--search-note">
               <SearchBar keywordHandler={onKeywordChange}/>
             </div>
           )}
 
-          <h1 className="text--center">📂 { PageContent[language].archive }</h1>
+          <h1 className="text--center">📂 { PageContent[language].archiveList }</h1>
 
           <NoteWrapper 
             pageName="archive" 

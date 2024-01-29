@@ -51,7 +51,7 @@ function AppNavbar() {
 
         <ul className={`nav__list ${isNavMobileShown ? 'is-shown' : ''}`}>
           {links.map((link, index) => (
-            <li key={index} className={location.pathname === link.to ? 'active' : ''}>
+            <li key={index} className={location.pathname === link.path ? 'active' : ''}>
               <Link to={link.path} onClick={handleNavToggle}>
                 {NavbarContent[language].list[index]}
               </Link>

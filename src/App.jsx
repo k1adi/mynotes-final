@@ -15,16 +15,18 @@ import NotFoundPage from './pages/NotFoundPage';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import { useAuth, useTheme } from './hooks/useContext';
+import { useAuth, useLocale, useTheme } from './hooks/useContext';
 
 function App() {
   const { initializePage } = useAuth();
   const { theme } = useTheme();
+  const { language } = useLocale();
 
   React.useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute('lang', language);
   }, []);
-  
+
   if (initializePage) return;
 
   return (

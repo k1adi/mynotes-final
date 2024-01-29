@@ -15,6 +15,7 @@ function NoteModal({ addNote, closeModal }) {
   const [titleNote, setTitleNote] = React.useState('');
   const [bodyNote, setBodyNote] = React.useState('');
   const [lengthTitle, setLengthTitle] = React.useState(0);
+  const [accepted, setAccept] = React.useState(false);
 
   const onTitleChange = (event) => {
     const currentValue = event .target.value;
@@ -25,7 +26,14 @@ function NoteModal({ addNote, closeModal }) {
   };
 
   const onQuillChange = (value) => {
-    setBodyNote(value);
+    const plainValue = value.replace(/<[^>]*>/g, '');
+    if(plainValue) {
+      setBodyNote(value);
+      setAccept(true);
+    } else {
+      setAccept(false);
+    }
+
   };
 
   const onSubmitHandler = (event) => {
@@ -79,7 +87,7 @@ function NoteModal({ addNote, closeModal }) {
               </div>
 
               <div className="form__button">
-                <input type="submit" className="button button--main" value={ButtonContent[language].submit} />
+                <input type="submit" className={`button button--main ${!accepted ? 'disabled' : ''}`} value={ButtonContent[language].submit}  disabled={!accepted} />
               </div>
             </form>
           </div>
